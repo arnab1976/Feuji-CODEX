@@ -1,0 +1,497 @@
+{
+ "INPUTS": [
+  {
+   "k": "rec",
+   "n": "Medical records (PDF / TIFF)",
+   "ag": [
+    "ocr",
+    "nlp",
+    "llm",
+    "add"
+   ],
+   "out": [
+    "sub",
+    "rev",
+    "aud",
+    "addq"
+   ],
+   "ex": "A 3-page scanned office-visit note becomes a structured document object (layout blocks with OCR confidence), then clinical entities, then a coded, cited HCC set."
+  },
+  {
+   "k": "ehr",
+   "n": "EHR & FHIR structured data",
+   "ag": [
+    "ocr",
+    "llm",
+    "add"
+   ],
+   "out": [
+    "sub",
+    "addq",
+    "aud"
+   ],
+   "ex": "FHIR Observation (eGFR 41, 44), MedicationStatement (apixaban) and Encounter resources give the coder structured evidence and the encounter ID that every submission must link to."
+  },
+  {
+   "k": "hist",
+   "n": "Prior RAPS / EDS submission history",
+   "ag": [
+    "llm",
+    "gate"
+   ],
+   "out": [
+    "sub",
+    "rev",
+    "aud"
+   ],
+   "ex": "Last year's accepted HCCs tell the LLM coder which chronic conditions to look for evidence of this year. They are never carried forward without current documentation, and prior codes that this year's record does not support are flagged for deletion."
+  },
+  {
+   "k": "map",
+   "n": "CMS-HCC V28 category maps",
+   "ag": [
+    "nlp",
+    "llm",
+    "gate"
+   ],
+   "out": [
+    "sub",
+    "rev",
+    "dash"
+   ],
+   "ex": "ICD-10 → V28 HCC mapping and hierarchies. Example: F32.A (depression, unspecified) carries no V28 HCC; F33.1 (recurrent, moderate) maps to HCC 155."
+  },
+  {
+   "k": "qa",
+   "n": "Certified coder QA validation data",
+   "ag": [
+    "nlp",
+    "gate"
+   ],
+   "out": [
+    "dash",
+    "rev"
+   ],
+   "ex": "Held-out coder-validated charts benchmark the NER model and train the Platt calibration that turns raw scores into true acceptance probabilities."
+  }
+ ],
+ "AGENTS": {
+  "ocr": {
+   "n": "OCR Extraction Agent",
+   "r": "Document parser & layout processor"
+  },
+  "nlp": {
+   "n": "NLP Coding Agent",
+   "r": "BioBERT / Med-BERT HCC code extractor"
+  },
+  "llm": {
+   "n": "LLM HCC Coder Agent",
+   "r": "Fine-tuned clinical chart coder"
+  },
+  "gate": {
+   "n": "Confidence Gate Agent",
+   "r": "QA router & submission decision engine"
+  },
+  "add": {
+   "n": "Addendum AI Agent",
+   "r": "Physician documentation query"
+  }
+ },
+ "OUTPUTS": {
+  "sub": "Auto-submitted HCC codes (encounter-linked, EDS)",
+  "rev": "Human review queue (evidence pre-assembled)",
+  "aud": "Per-code rationale audit log",
+  "addq": "Physician query / addendum request",
+  "dash": "Coder throughput & accuracy dashboard"
+ },
+ "AG": [
+  {
+   "k": "ocr",
+   "x": 20,
+   "n": "OCR Extraction",
+   "r": "Document parser & layout processor",
+   "in": "PDF / TIFF record from S3 + KG context",
+   "out": "{\"doc_id\":\"ENC-2026-0403-61277\",\n \"blocks\":[{\"type\":\"assessment_plan\",\n   \"bbox\":[72,410,540,620],\"ocr_conf\":0.93,\n   \"text\":\"3. Paroxysmal atrial fibrillation...\"}],\n \"kg_context\":[\"I48.x → HCC 238\"]}",
+   "t": [
+    "AWS Textract",
+    "LayoutLMv3",
+    "Google Document AI (fallback)",
+    "Tesseract",
+    "Neo4j KG context injection",
+    "AWS S3"
+   ],
+   "gr": "Low OCR confidence is passed forward as uncertainty, never silently corrected."
+  },
+  {
+   "k": "nlp",
+   "x": 255,
+   "n": "NLP Coding",
+   "r": "BioBERT / Med-BERT HCC code extractor",
+   "in": "Structured document object",
+   "out": "{\"entities\":[{\"text\":\"Paroxysmal atrial fibrillation\",\n  \"type\":\"condition\",\"flag\":\"coexisting\",\n  \"prelim_icd10\":\"I48.0\",\"span\":\"b7\",\"conf\":0.95},\n  {\"text\":\"apixaban\",\"type\":\"medication\"}]}",
+   "t": [
+    "BioBERT (HCC fine-tuned)",
+    "Med-BERT",
+    "scispaCy",
+    "CRF sequence labeller",
+    "PyTorch",
+    "GPU batch inference"
+   ],
+   "gr": "Benchmarked continuously against a held-out certified-coder validation set."
+  },
+  {
+   "k": "llm",
+   "x": 490,
+   "n": "LLM HCC Coder",
+   "r": "Fine-tuned clinical chart coder",
+   "in": "Record + NER entities + prior submissions + V28 maps",
+   "out": "{\"codes\":[{\"icd10\":\"I48.0\",\"hcc_v28\":\"238\",\n  \"meat\":[\"M\",\"E\",\"A\",\"T\"],\"source\":\"b7\",\n  \"rationale\":\"Type specified; rate control and\n   anticoagulation documented.\"}],\n \"unsupported\":[{\"icd10\":\"I50.9\",\"source\":\"claim\"}]}",
+   "t": [
+    "GPT-4o, plan fine-tuned (per SA-07; model-swappable)",
+    "LangChain",
+    "LangSmith tracing",
+    "OpenAI fine-tuning API",
+    "ChromaDB coding KB",
+    "Prior submission context"
+   ],
+   "gr": "Every code must cite a source span; uncited codes are dropped. LangSmith traces each inference for hallucination monitoring."
+  },
+  {
+   "k": "gate",
+   "x": 725,
+   "n": "Confidence Gate",
+   "r": "QA router & submission decision engine",
+   "in": "Code set + eligibility checks",
+   "out": "{\"I48.0\":{\"p\":0.95,\"lane\":\"auto\"},\n \"F33.1\":{\"p\":0.71,\"lane\":\"review\",\n   \"reason\":\"severity inferred\"},\n \"I50.9\":{\"lane\":\"delete\"}}",
+   "t": [
+    "Platt calibration (scikit-learn)",
+    "XGBoost acceptance predictor",
+    "SHAP",
+    "PostgreSQL routing log",
+    "SQS review queue",
+    "FastAPI",
+    "Airflow"
+   ],
+   "gr": "Recalibrated quarterly; auto lane QA-sampled; eligibility rules run before any score."
+  },
+  {
+   "k": "add",
+   "x": 960,
+   "n": "Addendum AI",
+   "r": "Physician documentation query",
+   "in": "Clinical evidence without a matching documented diagnosis",
+   "out": "{\"query_id\":\"Q-61277-01\",\"to\":\"L. Mendes, DO\",\n \"indicators\":[\"eGFR 44\",\"eGFR 41\",\"Cr 1.7\"],\n \"options\":[\"CKD (specify stage)\",\"Other\",\n  \"Not significant\",\"Not assessed / undetermined\"],\n \"sla_hours\":24}",
+   "t": [
+    "GPT-4o (query drafting)",
+    "LangChain",
+    "Physician portal API",
+    "Neo4j evidence retrieval",
+    "PostgreSQL tracking",
+    "AWS SES"
+   ],
+   "gr": "Non-leading, multiple-choice queries only; no payment language; tied to the original encounter."
+  }
+ ],
+ "NODES": {
+  "prism": {
+   "x": 30,
+   "y": 40,
+   "c": "#b3123b",
+   "n": "PRISM",
+   "d": "Patient identity · engagement"
+  },
+  "aria": {
+   "x": 520,
+   "y": 40,
+   "c": "#0d8a82",
+   "n": "ARIA",
+   "d": "Population decisioning"
+  },
+  "codex": {
+   "x": 275,
+   "y": 200,
+   "c": "#4f3cc9",
+   "n": "CODEX",
+   "d": "Documentation intelligence"
+  },
+  "nexus": {
+   "x": 520,
+   "y": 360,
+   "c": "#d97706",
+   "n": "NEXUS",
+   "d": "Care operations · visits"
+  },
+  "cms": {
+   "x": 30,
+   "y": 360,
+   "c": "#44526a",
+   "n": "CMS EDS",
+   "d": "Encounter submission (US MA)",
+   "ext": 1
+  }
+ },
+ "EDGES": [
+  {
+   "id": "e1",
+   "a": "prism",
+   "b": "codex",
+   "lb": "Patient ID · documents",
+   "p": "M210,95 C260,120 280,160 320,200",
+   "f": "H",
+   "pay": "Master PRISM patient ID (also used by ARIA and NEXUS), demographics, consent flags, and uploaded clinical documents (discharge summaries, specialist letters) as FHIR DocumentReference.",
+   "val": "One patient identity across all four products; CODEX attaches every coded encounter to the same person ARIA ranks and NEXUS visits.",
+   "cav": "PRISM chatbot conversations are <b>not</b> a valid source for risk-adjustment codes. They can only provide context. The gate blocks any diagnosis whose only source is PRISM."
+  },
+  {
+   "id": "e2",
+   "a": "codex",
+   "b": "aria",
+   "lb": "Open conditions · suspects",
+   "p": "M455,215 C500,190 540,160 590,120",
+   "f": "H",
+   "pay": "Per patient: chronic conditions documented last year but not yet assessed this year, evidence-backed suspects (e.g. two eGFR values in the CKD 3b range), and unanswered physician queries.",
+   "val": "ARIA adds these as ranking signals in its nightly run, so patients with unassessed chronic disease get prioritised for a clinical visit.",
+   "cav": "ARIA outreach must invite the patient to <b>care</b> (a wellness or assessment visit), never mention diagnoses to be \"captured\". The purpose is clinical follow-up, not code collection."
+  },
+  {
+   "id": "e3",
+   "a": "aria",
+   "b": "prism",
+   "lb": "Outreach via PRISM channels",
+   "p": "M520,70 L210,70",
+   "f": "H",
+   "pay": "Outreach decision (already live in the stack): who, which channel, which message, under the customer's brand.",
+   "val": "Existing ARIA → PRISM flow; CODEX only adds a reason to reach out.",
+   "cav": "No change needed. Already built."
+  },
+  {
+   "id": "e4",
+   "a": "aria",
+   "b": "nexus",
+   "lb": "Visit scheduled",
+   "p": "M610,130 L610,360",
+   "f": "H",
+   "pay": "Visit request with priority and reason into the NEXUS care plan.",
+   "val": "Existing flow; the visit becomes the compliant moment to assess and document conditions.",
+   "cav": "Already in the PRISM + ARIA + NEXUS stack."
+  },
+  {
+   "id": "e5",
+   "a": "codex",
+   "b": "nexus",
+   "lb": "Pre-visit brief",
+   "p": "M455,260 C500,280 510,330 540,360",
+   "f": "H",
+   "pay": "Neutral \"conditions to re-assess\" list for the clinician: prior-year conditions, abnormal labs awaiting interpretation, current meds that imply a condition.",
+   "val": "Prospective, point-of-care documentation: the direction regulators prefer over retrospective add-only reviews.",
+   "cav": "Only clinician visits (MD/DO/NP/PA, face-to-face or video) produce codable diagnoses. Nurse-aide or caregiver visits in NEXUS can collect vitals but are not coding sources."
+  },
+  {
+   "id": "e6",
+   "a": "nexus",
+   "b": "codex",
+   "lb": "Visit note (linked encounter)",
+   "p": "M520,420 C430,420 380,360 365,292",
+   "f": "H",
+   "pay": "Signed visit note plus encounter ID from NEXUS (as in demo chart C).",
+   "val": "CODEX codes the note concurrently, before the encounter is submitted, with MEAT check, gate and query. ARIA's loop closes when the condition is assessed.",
+   "cav": "Visit notes must be signed by the rendering clinician before CODEX submits."
+  },
+  {
+   "id": "e7",
+   "a": "codex",
+   "b": "cms",
+   "lb": "EDS submission",
+   "p": "M290,290 C230,330 200,350 175,360",
+   "f": "H",
+   "pay": "Encounter-linked adds and deletes with per-code audit log.",
+   "val": "Only relevant to US Medicare Advantage customers.",
+   "cav": "For LATAM customers this edge does not exist. CODEX outputs an ICD-10 problem list back into PRISM / NEXUS instead.",
+   "us": 1
+  },
+  {
+   "id": "e8",
+   "a": "codex",
+   "b": "prism",
+   "lb": "Coded problem list",
+   "p": "M275,240 C200,240 120,200 110,112",
+   "f": "M",
+   "pay": "Validated ICD-10 problem list, with source citations, written back to the PRISM patient record.",
+   "val": "PRISM's 30 specialist agents get a cleaner clinical context; useful in LATAM, where the CMS edge does not apply.",
+   "cav": "Value is clinical quality rather than revenue, which makes it a harder sell on its own. Position it as part of the bundle."
+  }
+ ],
+ "JOURNEY": [
+  [
+   "Register",
+   "e1",
+   "Dorothy's daughter registers her in PRISM and uploads an oncology letter. PRISM issues PRISM-P-77502, which ARIA, NEXUS and CODEX all reuse."
+  ],
+  [
+   "Scan",
+   "e2",
+   "CODEX scans last year's encounters: dementia and breast cancer on active therapy were documented, but neither has been assessed this year. They are sent to ARIA as open conditions."
+  ],
+  [
+   "Rank",
+   "e3",
+   "ARIA's nightly run ranks Dorothy high (open conditions, adherence signals) and reaches her daughter through PRISM's channel under the customer's brand."
+  ],
+  [
+   "Schedule",
+   "e4",
+   "The daughter accepts. ARIA hands a priority NP home visit to NEXUS Care Ops."
+  ],
+  [
+   "Brief",
+   "e5",
+   "NEXUS gives the NP a pre-visit brief: family contact, meds, and a neutral \"conditions to re-assess\" list from CODEX."
+  ],
+  [
+   "Code",
+   "e6",
+   "The NP's handwritten note returns to CODEX. This is demo chart C: three codes go to a coder, three auto-clear."
+  ],
+  [
+   "Submit",
+   "e7",
+   "Confirmed codes are submitted on the linked encounter with an audit trail; ARIA closes the loop."
+  ]
+ ],
+ "SEG": [
+  [
+   "Medicare Advantage health plans",
+   5,
+   "VP Risk Adjustment · CFO · Chief Compliance Officer",
+   "Direct",
+   {
+    "pain": "Coder capacity vs CMS deadlines; V28 specificity; RADV audit and DOJ exposure; costly vendor chart-review programmes.",
+    "hook": "3× coder throughput with two-way, encounter-linked, cited coding. Defensible revenue, not just more revenue.",
+    "pr": "Per chart (retrospective) or PMPM (point-of-care).",
+    "h360": "Buys CODEX on its own and sends its own charts."
+   }
+  ],
+  [
+   "Risk-adjustment & payment-integrity vendors (Cotiviti-type)",
+   5,
+   "Product / operations leadership",
+   "Partner · white-label",
+   {
+    "pain": "Margin pressure on human coding services; need an AI layer without rebuilding.",
+    "hook": "CODEX as the engine behind their coding service, as framed in SA-07 for Cotiviti.",
+    "pr": "Platform licence + per-chart volume tier.",
+    "h360": "White-label channel. CODEX stays the coder behind their brand."
+   }
+  ],
+  [
+   "Risk-bearing provider groups, MSOs, ACO REACH entities",
+   4,
+   "CMO · VP Value-Based Care · CDI lead",
+   "Direct",
+   {
+    "pain": "Physicians under-document chronic conditions; shared-savings and capitation depend on accurate risk scores.",
+    "hook": "Pre-visit briefs and concurrent coding at the point of care. Fewer queries after the fact.",
+    "pr": "PMPM on attributed lives.",
+    "h360": "Sold directly. Visit notes are pushed in, and coded results go back to the group."
+   }
+  ],
+  [
+   "Home-based care & in-home assessment companies",
+   4,
+   "COO · Clinical operations",
+   "Direct · bundle",
+   {
+    "pain": "NP home-visit notes are handwritten, hard to code, and heavily scrutinised.",
+    "hook": "Demo chart C: handwriting OCR, gate, coder review, linked submission.",
+    "pr": "Per covered life.",
+    "h360": "Sold directly. Home-visit notes arrive from the organisation's own document feed."
+   }
+  ],
+  [
+   "ACA marketplace & Medicaid managed-care plans",
+   3,
+   "Risk adjustment / actuarial",
+   "Direct · phase 2",
+   {
+    "pain": "Same coding problem under HHS-HCC (ACA) or CDPS+Rx (Medicaid) models.",
+    "hook": "Same engine with a different model pack in the knowledge graph.",
+    "pr": "Per chart.",
+    "h360": "Optional."
+   }
+  ],
+  [
+   "Hospital CDI (inpatient DRG)",
+   2,
+   "CDI director · HIM",
+   "Adjacent",
+   {
+    "pain": "DRG/CC/MCC capture and denials.",
+    "hook": "OCR, NER and query engine reusable; the coding logic differs (MS-DRG, not HCC).",
+    "pr": "Separate product.",
+    "h360": "Adjacent. The HCC coder is not the product they need."
+   }
+  ],
+  [
+   "LATAM insurers & caregiver networks",
+   2,
+   "Medical director · operations",
+   "Bundle add-on",
+   {
+    "pain": "Poor problem-list quality and no structured coding in home-care records.",
+    "hook": "Documentation-quality edition: an ICD-10 problem list returned to the sender. There is no CMS submission in this edition.",
+    "pr": "Small add-on to the bundle.",
+    "h360": "Possible, but low priority. Do not lead with it."
+   }
+  ]
+ ],
+ "COMP": [
+  [
+   "Two-way coding",
+   "Every review can <b>add and delete</b>. Unsupported codes (like I50.9 in chart B) are flagged and corrected.",
+   "DOJ has named one-directional chart reviews an enforcement priority; Aetna paid $117.7M in March 2026 over this pattern.",
+   "bad"
+  ],
+  [
+   "Encounter-linked only",
+   "Every add or delete is tied to an encounter ID. There are no free-floating chart-review diagnoses.",
+   "CMS finalised the exclusion of unlinked chart-review diagnoses from CY2027 risk scores.",
+   "bad"
+  ],
+  [
+   "Timely, non-leading queries",
+   "Addendum AI writes multiple-choice clinical queries within 24 h, with \"not assessed / undetermined\" options and no payment language.",
+   "Kaiser affiliates paid $556M in January 2026; DOJ alleged long-delayed, pressured addenda.",
+   "bad"
+  ],
+  [
+   "Eligibility before confidence",
+   "Face-to-face, acceptable provider type, date-of-service window. Lab-only, chatbot or aide-visit sources are blocked.",
+   "RADV validates against the medical record from an acceptable encounter.",
+   "warn"
+  ],
+  [
+   "MEAT evidence + source citation",
+   "Each code shows Monitor / Evaluate / Assess / Treat evidence and a clickable span in the record.",
+   "Gives coders, auditors and RADV reviewers the same evidence trail.",
+   "warn"
+  ],
+  [
+   "No severity or diagnosis inference",
+   "The model may suggest, but severity (e.g. depression, dementia stage) must be in the provider's words. Inferred items go to review.",
+   "Coding from scores or labs alone is unsupported coding.",
+   "warn"
+  ],
+  [
+   "V28 and EDS ready",
+   "CMS-HCC V28 (100% of the 2026 risk score) with EDS-based submission; RAPS kept only for legacy needs.",
+   "V28 scores from encounter data and FFS claims only.",
+   "ok"
+  ],
+  [
+   "HIPAA & model governance",
+   "BAA with the LLM provider, PHI kept in the customer's VPC, LangSmith traces, quarterly gate recalibration, human QA sampling.",
+   "Standard expectation for any PHI-processing AI vendor.",
+   "ok"
+  ]
+ ]
+}

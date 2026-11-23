@@ -1,0 +1,124 @@
+{
+ "SIMBANK": [
+  {
+   "g": "dm",
+   "code": "E11.22",
+   "ap": "Type 2 diabetes mellitus with diabetic chronic kidney disease: A1c {a1c}%, above goal. Continue metformin 500 mg BID and empagliflozin 10 mg.",
+   "lab": "HbA1c {a1c}%",
+   "med": "Metformin 500 mg BID, empagliflozin 10 mg"
+  },
+  {
+   "g": "dm",
+   "code": "E11.40",
+   "ap": "Type 2 diabetes with diabetic neuropathy: monofilament exam reduced bilaterally. Continue gabapentin 300 mg; podiatry referral.",
+   "lab": "HbA1c {a1c}%",
+   "med": "Gabapentin 300 mg, metformin 1000 mg BID"
+  },
+  {
+   "g": "ckd",
+   "code": "N18.32",
+   "ap": "CKD stage 3b: eGFR {egfr}, stable. Renal panel in 3 months; nephrology referral placed.",
+   "lab": "eGFR {egfr}"
+  },
+  {
+   "g": "hf",
+   "code": "I50.32",
+   "ap": "Chronic diastolic heart failure: euvolemic today, weight stable. Continue furosemide 20 mg.",
+   "med": "Furosemide 20 mg"
+  },
+  {
+   "g": "copd",
+   "code": "J44.9",
+   "ap": "COPD: stable on tiotropium, no exacerbation since last visit. PFTs ordered.",
+   "med": "Tiotropium 18 mcg daily, albuterol PRN"
+  },
+  {
+   "g": "af",
+   "code": "I48.21",
+   "ap": "Permanent atrial fibrillation: rate controlled. Continue apixaban 5 mg BID and metoprolol 25 mg.",
+   "med": "Apixaban 5 mg BID, metoprolol 25 mg"
+  },
+  {
+   "g": "obes",
+   "code": "E66.01",
+   "ap": "Morbid obesity, BMI {bmi}: dietary counselling provided; bariatric referral discussed.",
+   "vit": "BMI {bmi}"
+  },
+  {
+   "g": "dep",
+   "code": "F33.1",
+   "ap": "Major depressive disorder, recurrent, moderate: PHQ-9 {phq}. Increase sertraline to 100 mg; behavioural health referral.",
+   "med": "Sertraline 100 mg"
+  },
+  {
+   "g": "ra",
+   "code": "M06.9",
+   "ap": "Rheumatoid arthritis: joint exam with mild synovitis of the MCPs. Continue methotrexate 15 mg weekly.",
+   "med": "Methotrexate 15 mg weekly"
+  },
+  {
+   "g": "htn",
+   "code": "I10",
+   "ap": "Hypertension: BP {bp}, controlled. Continue lisinopril 10 mg.",
+   "med": "Lisinopril 10 mg"
+  },
+  {
+   "g": "lipid",
+   "code": "E78.5",
+   "ap": "Hyperlipidemia: continue atorvastatin 40 mg.",
+   "med": "Atorvastatin 40 mg"
+  },
+  {
+   "g": "prost",
+   "code": "C61",
+   "ap": "Prostate cancer: on leuprolide with urology follow-up; PSA reviewed.",
+   "med": "Leuprolide (urology)"
+  },
+  {
+   "g": "dep2",
+   "code": "F32.A",
+   "ap": "Depression: mood stable on escitalopram.",
+   "med": "Escitalopram 10 mg"
+  },
+  {
+   "g": "thy",
+   "code": "E03.9",
+   "ap": "Hypothyroidism: continue levothyroxine 75 mcg.",
+   "med": "Levothyroxine 75 mcg"
+  }
+ ],
+ "SNAMES": [
+  "Helen W., 77 F",
+  "George P., 71 M",
+  "Linda S., 68 F",
+  "Frank D., 83 M",
+  "Patricia M., 72 F",
+  "James O., 79 M",
+  "Barbara N., 75 F",
+  "Thomas R., 70 M",
+  "Maria G., 66 F",
+  "Walter B., 85 M"
+ ],
+ "SPROV": [
+  [
+   "J. Patel, MD · Internal Medicine",
+   "MD"
+  ],
+  [
+   "K. Osei, NP · Primary Care",
+   "NP"
+  ],
+  [
+   "R. Gomez, DO · Family Medicine",
+   "DO"
+  ],
+  [
+   "T. Chen, PA · Primary Care",
+   "PA"
+  ],
+  [
+   "M. Lopez, RN · Care Coordination",
+   "RN"
+  ]
+ ]
+}

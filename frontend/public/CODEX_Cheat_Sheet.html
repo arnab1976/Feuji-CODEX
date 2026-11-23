@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>CODEX Cheat Sheet · Feuji Healthcare 360</title>
+<style>
+@page{size:A4;margin:9mm 10mm 8mm}
+:root{--ink:#0f1d33;--ink2:#44526a;--mute:#7a869c;--line:#dfe4ee;--codex:#4f3cc9;--soft:#eeebfd;--ok:#1b8f4e;--oks:#e5f6ec;--warn:#b26f00;--ws:#fff3d9;--bad:#c23b1a;--bs:#fde9e3;--navy:#13294b;--teal:#0d8a82}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);font-size:9pt;line-height:1.32;background:#e9edf4}
+.page{width:210mm;min-height:297mm;margin:10px auto;background:#fff;padding:11mm;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+@media print{body{background:#fff}.page{margin:0;padding:0;box-shadow:none;width:auto;min-height:auto}.pb{break-before:page}}
+.hdr{display:flex;justify-content:space-between;align-items:flex-end;background:var(--navy);color:#fff;border-radius:8px;padding:10px 14px;margin-bottom:8px}
+.hdr h1{margin:0;font-size:19pt;letter-spacing:.5px}.hdr .s{font-size:9pt;color:#c3cde2}
+.hdr .r{text-align:right;font-size:8.5pt;color:#c3cde2}
+h2{font-size:9.8pt;margin:7px 0 3px;color:var(--codex);text-transform:uppercase;letter-spacing:.8px;border-bottom:1.5px solid var(--soft);padding-bottom:2px}
+p{margin:0 0 4px}
+.pitch{font-size:9.6pt;background:var(--soft);border-left:4px solid var(--codex);padding:7px 10px;border-radius:0 6px 6px 0}
+.kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:5px;margin:7px 0}
+.kpis div{border:1px solid var(--line);border-radius:6px;padding:5px 6px;text-align:center}
+.kpis b{display:block;font-size:14pt;color:var(--codex);line-height:1.1}
+.kpis span{font-size:7.6pt;color:var(--ink2)}
+table{border-collapse:collapse;width:100%;font-size:8.2pt}
+th{background:#f3f5fa;text-align:left;font-size:7.4pt;text-transform:uppercase;letter-spacing:.5px;color:var(--ink2);padding:3px 5px}
+td{border-bottom:1px solid var(--line);padding:2.5px 5px;vertical-align:top}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+ul{margin:0;padding-left:15px}li{margin-bottom:1px}
+.tag{display:inline-block;font-size:7.6pt;font-weight:700;padding:1px 5px;border-radius:4px}
+.H{background:var(--oks);color:var(--ok)}.M{background:var(--ws);color:var(--warn)}.L{background:var(--bs);color:var(--bad)}
+.box{border:1px solid var(--line);border-radius:6px;padding:6px 8px}
+.box.bad{border-color:#f0b8a8;background:#fff8f5}.box.ok{border-color:#a9dcbd;background:#f6fcf8}
+.verdict{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.verdict .box b.big{font-size:13pt}
+.stage{display:grid;grid-template-columns:22px 1fr 1.25fr;gap:6px;align-items:start;border-bottom:1px dashed var(--line);padding:3px 0}
+.stage i{font-style:normal;background:var(--codex);color:#fff;border-radius:4px;text-align:center;font-weight:800;font-size:8pt;padding:1px 0}
+.foot{font-size:7.3pt;color:var(--mute);margin-top:6px;border-top:1px solid var(--line);padding-top:4px}
+.mono{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:8.2pt}
+</style>
+</head>
+<body>
+<!-- ================= PAGE 1 ================= -->
+<div class="page">
+  <div class="hdr"><div><h1>CODEX</h1><div class="s">Clinical Outcome Documentation EXtraction Engine · Use Case 07 · Risk Adjustment</div></div>
+  <div class="r">Feuji Healthcare 360 · Sales cheat sheet<br>Based on SA-07 v1.0 (Sept 2026) · Nov 2026</div></div>
+
+  <div class="pitch"><b>In one line:</b> CODEX reads medical records (PDF/TIFF), codes every risk-adjusting condition to ICD-10 and CMS-HCC V28 with a cited rationale, and then decides for each code whether to <b>auto-submit</b>, <b>send to a coder</b>, <b>flag for deletion</b> or <b>query the physician</b>. Coders only work the cases where their judgement adds value.</div>
+
+  <div class="kpis">
+    <div><b>3×</b><span>coder throughput</span></div><div><b>97%+</b><span>first-pass CMS acceptance (from 85–90%)</span></div><div><b>&gt;90%</b><span>HCC code accuracy</span></div><div><b>$1.5M</b><span>backlog cost saved / plan / yr</span></div><div><b>40%</b><span>error-rate reduction</span></div><div><b>12 wks</b><span>go-live</span></div>
+  </div>
+
+  <div class="two">
+    <div>
+      <h2>The problem</h2>
+      <ul>
+        <li>Certified coders reach only 85–90% first-pass CMS acceptance, leaving a 10–15% error and rework gap.</li>
+        <li>Coding backlogs cost about <b>$1.5M per plan per year</b>; 40% of coder time goes on low-yield records.</li>
+        <li>Record volume exceeds what coders can process inside CMS deadline windows.</li>
+        <li>V28 (100% of the 2026 risk score) pays only for specific codes. Vague documentation now loses value, so specificity matters.</li>
+      </ul>
+    </div>
+    <div>
+      <h2>Inputs → outputs</h2>
+      <table>
+        <tr><th>Goes in</th><th>Comes out</th></tr>
+        <tr><td>Medical records (PDF, TIFF, handwriting)</td><td>Auto-submitted, encounter-linked HCC codes</td></tr>
+        <tr><td>EHR / FHIR structured data</td><td>Coder review queue, evidence pre-assembled</td></tr>
+        <tr><td>Prior RAPS / EDS submissions</td><td>Per-code rationale audit log (MEAT + source span)</td></tr>
+        <tr><td>CMS-HCC V28 category maps</td><td>Physician query / addendum request</td></tr>
+        <tr><td>Certified coder QA data</td><td>Throughput & accuracy dashboard; delete list</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <h2>How it works: five stages</h2>
+  <div class="stage" style="font-weight:700;color:var(--ink2);font-size:8pt"><span></span><span>STAGE · WHAT HAPPENS</span><span>EXAMPLE OUTPUT</span></div>
+  <div class="stage"><i>01</i><span><b>OCR + knowledge-graph-guided extraction.</b> AWS Textract and LayoutLMv3 keep the 2D layout; Neo4j (ICD-10 → HCC → SNOMED CT → RxNorm) injects coding context.</span><span>Layout blocks with OCR confidence; "DM + CKD co-documented → prefer E11.22 (HCC 37)"</span></div>
+  <div class="stage"><i>02</i><span><b>BioBERT / Med-BERT NER.</b> Extracts conditions, meds, labs and procedures with principal / secondary / coexisting flags.</span><span>"Paroxysmal atrial fibrillation" → I48.0 (prelim), conf 0.95, evidence span</span></div>
+  <div class="stage"><i>03</i><span><b>LLM HCC coder</b> (GPT-4o fine-tuned on 1,000+ plan charts) uses the record, entities and prior submissions to produce a complete code set.</span><span>I48.0 → HCC 238, MEAT ✓✓✓✓, rationale + cited passage; I50.9 on claim → unsupported</span></div>
+  <div class="stage"><i>04</i><span><b>Confidence-gated router.</b> Platt-calibrated score; eligibility rules first, then threshold; recalibrated quarterly.</span><span>≥0.90 auto-submit · below → coder (with reason) · unsupported → delete</span></div>
+  <div class="stage"><i>05</i><span><b>Submission + Addendum AI.</b> Encounter-linked EDS submission with audit log; non-leading physician query when evidence and documentation disagree.</span><span>eGFR 44 → 41 over 96 days, no renal dx → query within 24 h (rework from weeks to 24 h)</span></div>
+
+  <h2>The five agents</h2>
+  <table>
+    <tr><th style="width:23%">Agent</th><th>Job</th><th style="width:36%">Key tools</th></tr>
+    <tr><td><b>OCR Extraction</b></td><td>Parse PDF/TIFF into a structured document object with layout and KG context</td><td>Textract, LayoutLMv3, Google Document AI (fallback), Tesseract, S3</td></tr>
+    <tr><td><b>NLP Coding</b></td><td>NER for HCC-relevant ICD-10 codes with specificity flags and evidence spans</td><td>BioBERT, Med-BERT, scispaCy, CRF, PyTorch on GPU</td></tr>
+    <tr><td><b>LLM HCC Coder</b></td><td>Complete, validated code set with per-code rationale and citations</td><td>GPT-4o fine-tuned, LangChain, LangSmith, ChromaDB</td></tr>
+    <tr><td><b>Confidence Gate</b></td><td>Score, route (auto / review / delete), log every decision</td><td>Platt calibration, XGBoost, SHAP, PostgreSQL, SQS, FastAPI, Airflow</td></tr>
+    <tr><td><b>Addendum AI</b></td><td>Draft compliant physician queries when evidence and documentation disagree</td><td>GPT-4o, physician portal API, Neo4j, AWS SES</td></tr>
+  </table>
+  <p class="foot" style="margin-top:6px">Infra: AWS EC2 GPU · PostgreSQL · Snowflake · S3 · Airflow. CMS: EDS encounter submission (RAPS only as legacy) · CMS-HCC V28 maps. KPIs are SA-07 targets.</p>
+</div>
+
+<!-- ================= PAGE 2 ================= -->
+<div class="page pb">
+  <h2 style="margin-top:0">Who is the customer? B2B</h2>
+  <div class="verdict">
+    <div class="box ok"><b class="big" style="color:var(--ok)">B2B ✓</b> Risk-adjusted revenue, coding cost and RADV/DOJ exposure all sit with <b>health plans and risk-bearing providers</b>. They own the charts and the CMS submission. Inside Healthcare 360 it is at most B2B2C: the patient benefits from a better-documented visit but never sees or pays for CODEX.</div>
+    <div class="box"><b class="big" style="color:var(--mute)">B2C ✗</b> Individuals have no coding problem and no budget for one. CODEX processes PHI under HIPAA with BAAs and submits to CMS on a plan's behalf, which cannot work as a consumer product. Do not bundle it into the patient-side PRISM subscription.</div>
+  </div>
+  <table style="margin-top:6px">
+    <tr><th>Segment</th><th>Fit</th><th>Buyer</th><th>Hook</th><th>Pricing unit (proposed)</th></tr>
+    <tr><td><b>Medicare Advantage plans</b></td><td>★★★★★</td><td>VP Risk Adj., CFO, CCO</td><td>3× throughput; two-way, defensible coding</td><td>Per chart / PMPM</td></tr>
+    <tr><td><b>Risk-adj. & payment-integrity vendors</b> (Cotiviti-type)</td><td>★★★★★</td><td>Product / ops</td><td>White-label AI engine behind their coding service</td><td>Licence + volume tier</td></tr>
+    <tr><td><b>Risk-bearing groups, MSOs, ACO REACH</b></td><td>★★★★☆</td><td>CMO, VBC lead, CDI</td><td>Pre-visit briefs + concurrent coding</td><td>PMPM attributed lives</td></tr>
+    <tr><td><b>Home-based care / in-home assessment</b></td><td>★★★★☆</td><td>COO, clinical ops</td><td>Handwritten NP notes coded and gated (demo chart C)</td><td>H360 bundle add-on</td></tr>
+    <tr><td><b>ACA & Medicaid managed care</b></td><td>★★★☆☆</td><td>Risk adj. / actuarial</td><td>Same engine, HHS-HCC or CDPS+Rx pack (phase 2)</td><td>Per chart</td></tr>
+    <tr><td>LATAM insurers & caregivers (PRISM base)</td><td>★★☆☆☆</td><td>Medical director</td><td>ICD-10 problem-list quality only; no CMS</td><td>Small add-on</td></tr>
+  </table>
+
+  <h2>Linking to PRISM, ARIA and NEXUS: feasible, as the documentation layer</h2>
+  <table>
+    <tr><th>Flow</th><th>What moves</th><th>Feasibility</th><th>Watch-out</th></tr>
+    <tr><td>PRISM → CODEX</td><td>Master PRISM patient ID, consent, uploaded clinical documents (FHIR)</td><td><span class="tag H">High</span></td><td>PRISM chat is never a coding source, only context</td></tr>
+    <tr><td>CODEX → ARIA</td><td>Open (unassessed) chronic conditions, evidence-backed suspects, open queries</td><td><span class="tag H">High</span></td><td>Outreach invites patients to care, never "code capture"</td></tr>
+    <tr><td>ARIA → PRISM → NEXUS</td><td>Outreach under customer brand, then visit scheduled (already built)</td><td><span class="tag H">Live</span></td><td>No change needed</td></tr>
+    <tr><td>CODEX → NEXUS</td><td>Neutral pre-visit brief: "conditions to re-assess"</td><td><span class="tag H">High</span></td><td>Only MD/DO/NP/PA visits are codable; aide visits are not</td></tr>
+    <tr><td>NEXUS → CODEX</td><td>Signed visit note + encounter ID, coded before submission</td><td><span class="tag H">High</span></td><td>The compliance-preferred prospective direction</td></tr>
+    <tr><td>CODEX → CMS EDS</td><td>Encounter-linked adds and deletes with audit log</td><td><span class="tag M">US MA only</span></td><td>No equivalent in LATAM</td></tr>
+    <tr><td>CODEX → PRISM</td><td>Validated ICD-10 problem list back to the patient record</td><td><span class="tag M">Medium</span></td><td>Clinical-quality value only; sell inside the bundle</td></tr>
+  </table>
+  <p style="margin-top:3px"><b>Stance:</b> technically easy (shared PRISM ID + FHIR); commercially strongest in <b>US risk adjustment</b>. LATAM gets a documentation-quality edition only.</p>
+
+  <div class="two">
+    <div>
+      <h2>Compliance guardrails (lead with these)</h2>
+      <div class="box bad">
+      <ul>
+        <li><b>Two-way coding:</b> add <i>and</i> delete. DOJ treats one-directional chart review as an enforcement theory (Aetna, $117.7M, Mar 2026).</li>
+        <li><b>Encounter-linked only:</b> CMS excludes unlinked chart-review diagnoses from CY2027 risk scores.</li>
+        <li><b>Timely, non-leading queries:</b> within 24 h, multiple choice, "not assessed" option, no payment language (Kaiser, $556M, Jan 2026, involved delayed addenda).</li>
+        <li><b>Eligibility before confidence:</b> face-to-face, acceptable provider, no lab-only or inferred severity.</li>
+        <li><b>MEAT + cited source</b> per code; HIPAA BAA with the LLM provider; PHI in the customer VPC.</li>
+      </ul></div>
+      <p class="foot" style="border:0;margin-top:3px"><b>Fix in SA-07 before sharing:</b> "RAPS/EDPS auto-submit" → encounter-linked EDS; Addendum AI "improve HCC capture" → compliant clinical query; add deletes to the KPIs.</p>
+    </div>
+    <div>
+      <h2>Demo script (portal)</h2>
+      <ul>
+        <li><b>Chart A</b>, clean PDF: the I10 → I13.0 guideline catch; 6 of 7 codes auto-submit.</li>
+        <li><b>Chart B</b>, faxed TIFF: unsupported I50.9 flagged for deletion; depression severity "inferred" goes to a coder; lab-only CKD triggers a compliant query. Click "Assess at next visit" to show the ARIA/NEXUS hand-off.</li>
+        <li><b>Chart C</b>, handwritten NEXUS NP note: 3 codes go to a coder; active vs history-of cancer.</li>
+        <li><b>Gate lab:</b> toggle "Raw score" to show why calibration matters.</li>
+      </ul>
+      <h2>Discovery questions</h2>
+      <ul>
+        <li>Charts per year, coder FTEs, and current first-pass acceptance?</li>
+        <li>What share of HCCs come from retrospective vs point-of-care programmes, and how exposed are you to the unlinked chart-review exclusion?</li>
+        <li>Last RADV outcome? Do you delete unsupported codes today?</li>
+      </ul>
+      <h2>Objection → answer</h2>
+      <ul>
+        <li><i>"AI upcoding risk?"</i> Two-way, cited, gated, auditable. We sell accuracy, not code volume.</li>
+        <li><i>"Our coders will resist."</i> They keep the judgement calls; CODEX removes the low-yield 40%.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot">Sources: Feuji × Cotiviti SA-07 CODEX v1.0; CMS CY2026 Risk Adjustment Implementation memo (V28 at 100%); CMS CY2027 Rate Announcement (unlinked chart-review exclusion); public DOJ settlement reporting (Kaiser, Jan 2026; Aetna, Mar 2026). Pricing units and segment fit scores are Feuji proposals, not validated figures. Demo data is synthetic.</div>
+</div>
+</body>
+</html>

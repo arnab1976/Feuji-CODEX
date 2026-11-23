@@ -1,0 +1,1315 @@
+{
+ "A": {
+  "key": "A",
+  "title": "Margaret T., 74 F",
+  "sub": "Office visit · digital PDF",
+  "blurb": "Clean, well-documented chart. Shows an ICD-10 guideline catch and the clean auto-submit path.",
+  "meta": {
+   "patient": "Margaret T., 74 F",
+   "member": "MA-204718",
+   "prism": "PT-88231",
+   "enc": "ENC-2026-0312-55810",
+   "dos": "12 Mar 2026",
+   "prov": "A. Rao, MD · Internal Medicine",
+   "ptype": "MD",
+   "visit": "Face-to-face",
+   "quality": "Digital text",
+   "signed": true
+  },
+  "chart": {
+   "engine": "curated",
+   "scan": false,
+   "hand": false,
+   "fmt": "PDF (native digital) · 3 pages",
+   "ocr": {
+    "engine": "AWS Textract → LayoutLMv3",
+    "mean_confidence": 0.99,
+    "blocks": [
+     {
+      "block": "Header & demographics",
+      "type": "Form",
+      "confidence": 0.99
+     },
+     {
+      "block": "Vitals",
+      "type": "Table",
+      "confidence": 0.99
+     },
+     {
+      "block": "History of present illness",
+      "type": "Narrative",
+      "confidence": 0.98
+     },
+     {
+      "block": "Labs",
+      "type": "Table",
+      "confidence": 0.99
+     },
+     {
+      "block": "Medications",
+      "type": "List",
+      "confidence": 0.99
+     },
+     {
+      "block": "Assessment & plan",
+      "type": "Narrative",
+      "confidence": 0.98
+     }
+    ]
+   },
+   "kg": [
+    "Type 2 diabetes + CKD co-documented → prefer combination code E11.22 (V28 HCC 37) over E11.9 (HCC 38)",
+    "CKD stage stated → code N18.3x as well (use-additional-code rule)",
+    "Hypertension + heart failure + CKD in one record → guideline presumes linkage (I13.x family)",
+    "BMI ≥ 40 + clinician-documented obesity → E66.01 + Z68.41 (HCC 48)",
+    "RxNorm: empagliflozin, carvedilol, furosemide corroborate DM / HF treatment"
+   ],
+   "sections": [
+    {
+     "title": "Vitals",
+     "lines": [
+      {
+       "id": "a1",
+       "segs": [
+        {
+         "t": "BP 138/82 · HR 74 · Wt 112 kg · ",
+         "e": null
+        },
+        {
+         "t": "BMI 41.2",
+         "e": "vital"
+        }
+       ],
+       "hand": false
+      }
+     ]
+    },
+    {
+     "title": "History of present illness",
+     "lines": [
+      {
+       "id": "a2",
+       "segs": [
+        {
+         "t": "74-year-old female for follow-up of ",
+         "e": null
+        },
+        {
+         "t": "type 2 diabetes",
+         "e": "cond"
+        },
+        {
+         "t": " and ",
+         "e": null
+        },
+        {
+         "t": "heart failure",
+         "e": "cond"
+        },
+        {
+         "t": ". Reports mild ankle swelling, no chest pain, no orthopnoea.",
+         "e": null
+        }
+       ],
+       "hand": false
+      }
+     ]
+    },
+    {
+     "title": "Labs reviewed today",
+     "lines": [
+      {
+       "id": "a3",
+       "segs": [
+        {
+         "t": "HbA1c 8.1%",
+         "e": "lab"
+        },
+        {
+         "t": " (05 Mar 2026)",
+         "e": null
+        }
+       ],
+       "hand": false
+      },
+      {
+       "id": "a4",
+       "segs": [
+        {
+         "t": "eGFR 39",
+         "e": "lab"
+        },
+        {
+         "t": " (10 Jan 2026) → ",
+         "e": null
+        },
+        {
+         "t": "eGFR 36",
+         "e": "lab"
+        },
+        {
+         "t": " (05 Mar 2026); ",
+         "e": null
+        },
+        {
+         "t": "UACR 120 mg/g",
+         "e": "lab"
+        }
+       ],
+       "hand": false
+      },
+      {
+       "id": "a5",
+       "segs": [
+        {
+         "t": "Echo 11/2025: ",
+         "e": null
+        },
+        {
+         "t": "LVEF 35%",
+         "e": "lab"
+        }
+       ],
+       "hand": false
+      }
+     ]
+    },
+    {
+     "title": "Medications",
+     "lines": [
+      {
+       "id": "a6",
+       "segs": [
+        {
+         "t": "Metformin 500 mg BID",
+         "e": "med"
+        },
+        {
+         "t": " (reduced for renal function), ",
+         "e": null
+        },
+        {
+         "t": "empagliflozin 10 mg",
+         "e": "med"
+        },
+        {
+         "t": ", ",
+         "e": null
+        },
+        {
+         "t": "carvedilol 12.5 mg BID",
+         "e": "med"
+        },
+        {
+         "t": ", ",
+         "e": null
+        },
+        {
+         "t": "furosemide 20 mg",
+         "e": "med"
+        },
+        {
+         "t": ", ",
+         "e": null
+        },
+        {
+         "t": "lisinopril 10 mg",
+         "e": "med"
+        },
+        {
+         "t": ", ",
+         "e": null
+        },
+        {
+         "t": "atorvastatin 40 mg",
+         "e": "med"
+        }
+       ],
+       "hand": false
+      }
+     ]
+    },
+    {
+     "title": "Assessment & plan",
+     "lines": [
+      {
+       "id": "a7",
+       "segs": [
+        {
+         "t": "1. ",
+         "e": null
+        },
+        {
+         "t": "Type 2 diabetes mellitus with diabetic chronic kidney disease",
+         "e": "cond"
+        },
+        {
+         "t": ": A1c 8.1%, above goal. Continue empagliflozin; metformin dose reduced given eGFR.",
+         "e": null
+        }
+       ],
+       "hand": false
+      },
+      {
+       "id": "a8",
+       "segs": [
+        {
+         "t": "2. ",
+         "e": null
+        },
+        {
+         "t": "CKD stage 3b",
+         "e": "cond"
+        },
+        {
+         "t": ": eGFR 36, stable vs January. Repeat renal panel in 3 months; nephrology referral placed.",
+         "e": null
+        }
+       ],
+       "hand": false
+      },
+      {
+       "id": "a9",
+       "segs": [
+        {
+         "t": "3. ",
+         "e": null
+        },
+        {
+         "t": "Chronic systolic (congestive) heart failure",
+         "e": "cond"
+        },
+        {
+         "t": ", EF 35%: mild edema, otherwise euvolemic. Continue carvedilol and furosemide.",
+         "e": null
+        }
+       ],
+       "hand": false
+      },
+      {
+       "id": "a10",
+       "segs": [
+        {
+         "t": "4. ",
+         "e": null
+        },
+        {
+         "t": "Morbid (severe) obesity",
+         "e": "cond"
+        },
+        {
+         "t": ", BMI 41.2: diet counselling; discussed bariatric referral.",
+         "e": null
+        }
+       ],
+       "hand": false
+      },
+      {
+       "id": "a11",
+       "segs": [
+        {
+         "t": "5. ",
+         "e": null
+        },
+        {
+         "t": "Essential hypertension",
+         "e": "cond"
+        },
+        {
+         "t": ": controlled. Continue lisinopril.",
+         "e": null
+        }
+       ],
+       "hand": false
+      },
+      {
+       "id": "a12",
+       "segs": [
+        {
+         "t": "6. ",
+         "e": null
+        },
+        {
+         "t": "Hyperlipidemia",
+         "e": "cond"
+        },
+        {
+         "t": ": continue atorvastatin.",
+         "e": null
+        }
+       ],
+       "hand": false
+      }
+     ]
+    }
+   ],
+   "entities": [
+    {
+     "text": "Type 2 diabetes with diabetic CKD",
+     "type": "Condition",
+     "flag": "Principal",
+     "preliminary": "E11.22",
+     "confidence": 0.96
+    },
+    {
+     "text": "CKD stage 3b",
+     "type": "Condition",
+     "flag": "Coexisting",
+     "preliminary": "N18.32",
+     "confidence": 0.95
+    },
+    {
+     "text": "Chronic systolic heart failure",
+     "type": "Condition",
+     "flag": "Coexisting",
+     "preliminary": "I50.22",
+     "confidence": 0.94
+    },
+    {
+     "text": "Morbid obesity / BMI 41.2",
+     "type": "Condition",
+     "flag": "Secondary",
+     "preliminary": "E66.01, Z68.41",
+     "confidence": 0.93
+    },
+    {
+     "text": "Essential hypertension",
+     "type": "Condition",
+     "flag": "Secondary",
+     "preliminary": "I10",
+     "confidence": 0.97
+    },
+    {
+     "text": "Hyperlipidemia",
+     "type": "Condition",
+     "flag": "Secondary",
+     "preliminary": "E78.5",
+     "confidence": 0.98
+    },
+    {
+     "text": "Empagliflozin, metformin",
+     "type": "Medication",
+     "flag": "—",
+     "preliminary": "DM treatment",
+     "confidence": 0.99
+    },
+    {
+     "text": "Carvedilol, furosemide",
+     "type": "Medication",
+     "flag": "—",
+     "preliminary": "HF treatment",
+     "confidence": 0.99
+    },
+    {
+     "text": "eGFR 39 → 36, UACR 120",
+     "type": "Lab",
+     "flag": "—",
+     "preliminary": "CKD evidence",
+     "confidence": 0.99
+    }
+   ],
+   "codes": [
+    {
+     "icd10": "E11.22",
+     "description": "Type 2 DM with diabetic chronic kidney disease",
+     "hcc": "37",
+     "hcc_label": "Diabetes with Chronic Complications",
+     "confidence": 0.97,
+     "meat": "MEAT",
+     "source_line": "a7",
+     "rationale": "Diabetes documented in A&P #1 with explicit link to CKD, A1c evaluated, medication adjusted.",
+     "review_reason": "Below threshold; evidence pre-assembled.",
+     "group": ""
+    },
+    {
+     "icd10": "N18.32",
+     "description": "Chronic kidney disease, stage 3b",
+     "hcc": "328",
+     "hcc_label": "CKD, Moderate (Stage 3B)",
+     "confidence": 0.95,
+     "meat": "MEAT",
+     "source_line": "a8",
+     "rationale": "Stage explicitly documented; eGFR trend evaluated; referral placed. Required additional code with E11.22.",
+     "review_reason": "Below threshold; evidence pre-assembled.",
+     "group": ""
+    },
+    {
+     "icd10": "I50.22",
+     "description": "Chronic systolic (congestive) heart failure",
+     "hcc": "226",
+     "hcc_label": "Heart Failure, Except End-Stage and Acute",
+     "confidence": 0.93,
+     "meat": "MEAT",
+     "source_line": "a9",
+     "rationale": "Type and acuity documented, EF cited, volume status assessed, treatment continued.",
+     "review_reason": "Below threshold; evidence pre-assembled.",
+     "group": ""
+    },
+    {
+     "icd10": "I13.0",
+     "description": "Hypertensive heart & CKD with heart failure, stage 1–4 CKD",
+     "hcc": "226",
+     "hcc_label": "Heart Failure (same HCC; no extra weight)",
+     "confidence": 0.88,
+     "meat": "MEA",
+     "source_line": "a11",
+     "rationale": "ICD-10-CM guideline I.C.9.a presumes a causal link between hypertension, heart failure and CKD. Replaces I10. Sent to a coder because the physician did not state the link explicitly.",
+     "review_reason": "Guideline-based combination code; coder confirms.",
+     "group": ""
+    },
+    {
+     "icd10": "E66.01",
+     "description": "Morbid (severe) obesity due to excess calories",
+     "hcc": "48",
+     "hcc_label": "Morbid Obesity",
+     "confidence": 0.94,
+     "meat": "MEAT",
+     "source_line": "a10",
+     "rationale": "Clinician documented morbid obesity with BMI and counselling.",
+     "review_reason": "Below threshold; evidence pre-assembled.",
+     "group": ""
+    },
+    {
+     "icd10": "Z68.41",
+     "description": "BMI 40.0–44.9, adult",
+     "hcc": "48",
+     "hcc_label": "Morbid Obesity (hierarchy: counted once)",
+     "confidence": 0.92,
+     "meat": "ME",
+     "source_line": "a1",
+     "rationale": "BMI from vitals, codable because the clinician documented the associated diagnosis.",
+     "review_reason": "Below threshold; evidence pre-assembled.",
+     "group": ""
+    },
+    {
+     "icd10": "E78.5",
+     "description": "Hyperlipidemia, unspecified",
+     "hcc": null,
+     "hcc_label": "No V28 HCC",
+     "confidence": 0.98,
+     "meat": "MAT",
+     "source_line": "a12",
+     "rationale": "Captured for encounter completeness; not risk-adjusting.",
+     "review_reason": "Below threshold; evidence pre-assembled.",
+     "group": ""
+    }
+   ],
+   "deletes": [],
+   "gap": null,
+   "interactions": [
+    "DIABETES × HF",
+    "HF × KIDNEY"
+   ],
+   "notes": [
+    "I10 suppressed: replaced by the I13.0 combination code (ICD-10-CM I.C.9.a).",
+    "HCC 48 hierarchy: E66.01 and Z68.41 map to one HCC."
+   ],
+   "time": {
+    "human_min": 21,
+    "codex_min": 1.2,
+    "review_min": 2
+   }
+  }
+ },
+ "B": {
+  "key": "B",
+  "title": "Robert K., 69 M",
+  "sub": "Follow-up · faxed TIFF scan",
+  "blurb": "Two-way coding: an unsupported claim diagnosis is flagged for deletion, and a lab-only finding triggers a compliant physician query.",
+  "meta": {
+   "patient": "Robert K., 69 M",
+   "member": "MA-317502",
+   "prism": "PT-90417",
+   "enc": "ENC-2026-0403-61277",
+   "dos": "03 Apr 2026",
+   "prov": "L. Mendes, DO · Family Medicine",
+   "ptype": "DO",
+   "visit": "Face-to-face",
+   "quality": "Scanned",
+   "signed": true
+  },
+  "chart": {
+   "engine": "curated",
+   "scan": true,
+   "hand": false,
+   "fmt": "TIFF (fax scan, 200 dpi) · 2 pages",
+   "ocr": {
+    "engine": "AWS Textract → LayoutLMv3 (deskew applied)",
+    "mean_confidence": 0.94,
+    "blocks": [
+     {
+      "block": "Header & demographics",
+      "type": "Form",
+      "confidence": 0.96
+     },
+     {
+      "block": "History of present illness",
+      "type": "Narrative",
+      "confidence": 0.94
+     },
+     {
+      "block": "Outside labs (scanned)",
+      "type": "Table",
+      "confidence": 0.91
+     },
+     {
+      "block": "Medications",
+      "type": "List",
+      "confidence": 0.95
+     },
+     {
+      "block": "Assessment & plan",
+      "type": "Narrative",
+      "confidence": 0.93
+     }
+    ]
+   },
+   "kg": [
+    "COPD documented + tiotropium (RxNorm) → J44.9 (V28 HCC 280)",
+    "Atrial fibrillation + apixaban + metoprolol → specify type: paroxysmal I48.0 (HCC 238)",
+    "Depression: V28 maps only specified severity (F32.1/F32.2, F33.x); F32.A carries no HCC",
+    "PVD unspecified (I73.9) carries no V28 HCC; was HCC 108 in V24",
+    "Two eGFR values 30–44, ≥90 days apart = KDIGO CKD G3b criteria. Lab evidence alone is NOT codable"
+   ],
+   "sections": [
+    {
+     "title": "History of present illness",
+     "lines": [
+      {
+       "id": "b1",
+       "segs": [
+        {
+         "t": "Follow-up ",
+         "e": null
+        },
+        {
+         "t": "COPD",
+         "e": "cond"
+        },
+        {
+         "t": " and mood. Uses inhaler daily; ",
+         "e": null
+        },
+        {
+         "t": "dyspnoea on exertion at 2 blocks",
+         "e": "vital"
+        },
+        {
+         "t": ".",
+         "e": null
+        }
+       ],
+       "hand": false
+      },
+      {
+       "id": "b2",
+       "segs": [
+        {
+         "t": "Low mood and poor sleep for 6 weeks; second episode, first in 2019. ",
+         "e": null
+        },
+        {
+         "t": "PHQ-9 today: 14",
+         "e": "vital"
+        },
+        {
+         "t": ". Occasional ",
+         "e": null
+        },
+        {
+         "t": "palpitations",
+         "e": "cond"
+        },
+        {
+         "t": ".",
+         "e": null
+        }
+       ],
+       "hand": false
+      }
+     ]
+    },
+    {
+     "title": "Outside labs, reviewed today",
+     "lines": [
+      {
+       "id": "b3",
+       "segs": [
+        {
+         "t": "eGFR 44",
+         "e": "lab"
+        },
+        {
+         "t": " (14 Nov 2025) · ",
+         "e": null
+        },
+        {
+         "t": "eGFR 41",
+         "e": "lab"
+        },
+        {
+         "t": " (18 Feb 2026) · ",
+         "e": null
+        },
+        {
+         "t": "creatinine 1.7 mg/dL",
+         "e": "lab"
+        }
+       ],
+       "hand": false
+      }
+     ]
+    },
+    {
+     "title": "Medications",
+     "lines": [
+      {
+       "id": "b4",
+       "segs": [
+        {
+         "t": "Tiotropium 18 mcg daily",
+         "e": "med"
+        },
+        {
+         "t": ", ",
+         "e": null
+        },
+        {
+         "t": "albuterol PRN",
+         "e": "med"
+        },
+        {
+         "t": ", ",
+         "e": null
+        },
+        {
+         "t": "sertraline 50 → 100 mg",
+         "e": "med"
+        },
+        {
+         "t": ", ",
+         "e": null
+        },
+        {
+         "t": "apixaban 5 mg BID",
+         "e": "med"
+        },
+        {
+         "t": ", ",
+         "e": null
+        },
+        {
+         "t": "metoprolol 25 mg",
+         "e": "med"
+        }
+       ],
+       "hand": false
+      }
+     ]
+    },
+    {
+     "title": "Assessment & plan",
+     "lines": [
+      {
+       "id": "b5",
+       "segs": [
+        {
+         "t": "1. ",
+         "e": null
+        },
+        {
+         "t": "COPD",
+         "e": "cond"
+        },
+        {
+         "t": ": stable. Continue tiotropium; PFTs ordered.",
+         "e": null
+        }
+       ],
+       "hand": false
+      },
+      {
+       "id": "b6",
+       "segs": [
+        {
+         "t": "2. ",
+         "e": null
+        },
+        {
+         "t": "Depression",
+         "e": "cond"
+        },
+        {
+         "t": ": PHQ-9 14. Increase sertraline to 100 mg; behavioural health referral.",
+         "e": null
+        }
+       ],
+       "hand": false
+      },
+      {
+       "id": "b7",
+       "segs": [
+        {
+         "t": "3. ",
+         "e": null
+        },
+        {
+         "t": "Paroxysmal atrial fibrillation",
+         "e": "cond"
+        },
+        {
+         "t": ": rate controlled on metoprolol; anticoagulated on apixaban.",
+         "e": null
+        }
+       ],
+       "hand": false
+      },
+      {
+       "id": "b8",
+       "segs": [
+        {
+         "t": "4. ",
+         "e": null
+        },
+        {
+         "t": "Claudication L calf / peripheral vascular disease",
+         "e": "cond"
+        },
+        {
+         "t": ": continue walking programme.",
+         "e": null
+        }
+       ],
+       "hand": false
+      }
+     ]
+    },
+    {
+     "title": "Claim submitted for this encounter (from EDS history)",
+     "lines": [
+      {
+       "id": "b9",
+       "segs": [
+        {
+         "t": "Dx on claim: J44.9, F32.A, I48.0, I73.9, I50.9 (heart failure, unspecified)",
+         "e": null
+        }
+       ],
+       "hand": false
+      }
+     ]
+    }
+   ],
+   "entities": [
+    {
+     "text": "COPD",
+     "type": "Condition",
+     "flag": "Principal",
+     "preliminary": "J44.9",
+     "confidence": 0.97
+    },
+    {
+     "text": "Depression (second episode, PHQ-9 14)",
+     "type": "Condition",
+     "flag": "Secondary",
+     "preliminary": "F32.A / F33.1?",
+     "confidence": 0.81
+    },
+    {
+     "text": "Paroxysmal atrial fibrillation",
+     "type": "Condition",
+     "flag": "Coexisting",
+     "preliminary": "I48.0",
+     "confidence": 0.95
+    },
+    {
+     "text": "Peripheral vascular disease",
+     "type": "Condition",
+     "flag": "Secondary",
+     "preliminary": "I73.9",
+     "confidence": 0.92
+    },
+    {
+     "text": "eGFR 44 → 41 over 96 days",
+     "type": "Lab",
+     "flag": "—",
+     "preliminary": "CKD pattern (not codable)",
+     "confidence": 0.97
+    },
+    {
+     "text": "Apixaban, metoprolol",
+     "type": "Medication",
+     "flag": "—",
+     "preliminary": "AF treatment",
+     "confidence": 0.98
+    },
+    {
+     "text": "Heart failure",
+     "type": "Not found in note",
+     "flag": "—",
+     "preliminary": "On claim only",
+     "confidence": 0
+    }
+   ],
+   "codes": [
+    {
+     "icd10": "J44.9",
+     "description": "Chronic obstructive pulmonary disease, unspecified",
+     "hcc": "280",
+     "hcc_label": "COPD, ILD & Other Chronic Lung Disorders",
+     "confidence": 0.96,
+     "meat": "MEAT",
+     "source_line": "b5",
+     "rationale": "Documented and assessed in A&P #1, medication continued, PFTs ordered.",
+     "review_reason": "Below threshold; evidence pre-assembled.",
+     "group": ""
+    },
+    {
+     "icd10": "I48.0",
+     "description": "Paroxysmal atrial fibrillation",
+     "hcc": "238",
+     "hcc_label": "Specified Heart Arrhythmias",
+     "confidence": 0.95,
+     "meat": "MEAT",
+     "source_line": "b7",
+     "rationale": "Type specified; rate control and anticoagulation documented.",
+     "review_reason": "Below threshold; evidence pre-assembled.",
+     "group": ""
+    },
+    {
+     "icd10": "F33.1",
+     "description": "Major depressive disorder, recurrent, moderate",
+     "hcc": "155",
+     "hcc_label": "Major Depression, Moderate or Severe",
+     "confidence": 0.71,
+     "meat": "MEAT",
+     "source_line": "b6",
+     "rationale": "Model inferred \"recurrent\" from HPI and \"moderate\" from PHQ-9 14. Severity must be documented by the provider, not inferred from a score.",
+     "review_reason": "Severity inferred, not documented. Likely F32.A plus a specificity query.",
+     "group": ""
+    },
+    {
+     "icd10": "I73.9",
+     "description": "Peripheral vascular disease, unspecified",
+     "hcc": null,
+     "hcc_label": "No V28 HCC (V24: HCC 108)",
+     "confidence": 0.93,
+     "meat": "MAT",
+     "source_line": "b8",
+     "rationale": "Documented and managed. Note: not risk-adjusting under V28.",
+     "review_reason": "Below threshold; evidence pre-assembled.",
+     "group": ""
+    }
+   ],
+   "deletes": [
+    {
+     "icd10": "I50.9",
+     "description": "Heart failure, unspecified",
+     "hcc": "226",
+     "support": 0.06,
+     "source_line": "b9",
+     "rationale": "Present on the submitted claim but no HF documentation, assessment or treatment anywhere in this note. Likely carried over from the problem list. Recommend deleting from the encounter submission."
+    }
+   ],
+   "gap": {
+    "finding": "eGFR 44 (14 Nov 2025) and 41 (18 Feb 2026), 96 days apart; creatinine 1.7 mg/dL. Labs were reviewed at this visit, but no renal diagnosis is documented.",
+    "code": "N18.32",
+    "hcc": "328",
+    "kind": "CKD",
+    "stage": "3b",
+    "indicators": [
+     "eGFR 44 mL/min/1.73m² (14 Nov 2025) and 41 (18 Feb 2026), 96 days apart",
+     "Creatinine 1.7 mg/dL, reviewed at this visit"
+    ]
+   },
+   "interactions": [],
+   "notes": [
+    "Deleting I50.9 removes the HF × lung and HF × arrhythmia interaction flags. Two-way coding is what makes the remaining codes defensible in a RADV audit.",
+    "PVD: still documented for care, but V28 no longer pays for I73.9. Shown so coders and CFOs see the V24 → V28 shift."
+   ],
+   "time": {
+    "human_min": 24,
+    "codex_min": 1.4,
+    "review_min": 3.5
+   }
+  }
+ },
+ "C": {
+  "key": "C",
+  "title": "Dorothy L., 81 F",
+  "sub": "NP home visit · handwritten scan",
+  "blurb": "Low-quality handwriting and clinical ambiguity. The gate sends most codes to a coder. This is a home-visit note from an external source.",
+  "meta": {
+   "patient": "Dorothy L., 81 F",
+   "member": "MA-118094",
+   "prism": "PT-77502",
+   "enc": "ENC-2026-0220-40912",
+   "dos": "20 Feb 2026",
+   "prov": "S. Iyer, NP · Geriatrics",
+   "ptype": "NP",
+   "visit": "Face-to-face",
+   "quality": "Handwritten",
+   "signed": true
+  },
+  "chart": {
+   "engine": "curated",
+   "scan": true,
+   "hand": true,
+   "fmt": "TIFF (phone capture, handwriting) · 2 pages",
+   "ocr": {
+    "engine": "LayoutLMv3 + Google Document AI handwriting fallback",
+    "mean_confidence": 0.82,
+    "blocks": [
+     {
+      "block": "Header (typed)",
+      "type": "Form",
+      "confidence": 0.97
+     },
+     {
+      "block": "History (handwritten)",
+      "type": "Narrative",
+      "confidence": 0.79
+     },
+     {
+      "block": "Exam / cognition",
+      "type": "Narrative",
+      "confidence": 0.81
+     },
+     {
+      "block": "Medications (handwritten)",
+      "type": "List",
+      "confidence": 0.84
+     },
+     {
+      "block": "Assessment & plan (handwritten)",
+      "type": "Narrative",
+      "confidence": 0.76
+     }
+    ]
+   },
+   "kg": [
+    "Alzheimer's disease + dementia → G30.x with F02.xx (V28 dementia HCCs 125–127 by severity)",
+    "Severity word in dementia diagnosis drives HCC 126 vs 127: OCR confidence on \"mod.\" is 0.71",
+    "Breast cancer + current anastrozole (RxNorm aromatase inhibitor) → guideline: active treatment = C50.x, not Z85.3",
+    "Laterality required for C50.x; \"L\" detected",
+    "Depression on sertraline, \"stable\", no severity → F32.A (no V28 HCC)"
+   ],
+   "sections": [
+    {
+     "title": "History",
+     "lines": [
+      {
+       "id": "c1",
+       "segs": [
+        {
+         "t": "Home visit, daughter present. Increasing ",
+         "e": null
+        },
+        {
+         "t": "forgetfulness",
+         "e": "cond"
+        },
+        {
+         "t": " over 2 yrs; needs help w/ finances & meds (pill organiser by daughter).",
+         "e": null
+        }
+       ],
+       "hand": true
+      },
+      {
+       "id": "c2",
+       "segs": [
+        {
+         "t": "Hx ",
+         "e": null
+        },
+        {
+         "t": "L breast ca",
+         "e": "cond"
+        },
+        {
+         "t": " 2019 s/p lumpectomy, on ",
+         "e": null
+        },
+        {
+         "t": "anastrozole",
+         "e": "med"
+        },
+        {
+         "t": ". Onc f/u Jun.",
+         "e": null
+        }
+       ],
+       "hand": true
+      }
+     ]
+    },
+    {
+     "title": "Exam / cognition",
+     "lines": [
+      {
+       "id": "c3",
+       "segs": [
+        {
+         "t": "MMSE 19/30",
+         "e": "vital"
+        },
+        {
+         "t": ". Oriented to person/place. Gait steady w/ cane.",
+         "e": null
+        }
+       ],
+       "hand": true
+      }
+     ]
+    },
+    {
+     "title": "Medications",
+     "lines": [
+      {
+       "id": "c4",
+       "segs": [
+        {
+         "t": "Donepezil 10 mg",
+         "e": "med"
+        },
+        {
+         "t": ", ",
+         "e": null
+        },
+        {
+         "t": "anastrozole 1 mg",
+         "e": "med"
+        },
+        {
+         "t": ", ",
+         "e": null
+        },
+        {
+         "t": "sertraline 50 mg",
+         "e": "med"
+        },
+        {
+         "t": ", ",
+         "e": null
+        },
+        {
+         "t": "amlodipine 5 mg",
+         "e": "med"
+        }
+       ],
+       "hand": true
+      }
+     ]
+    },
+    {
+     "title": "Assessment & plan",
+     "lines": [
+      {
+       "id": "c5",
+       "segs": [
+        {
+         "t": "1. ",
+         "e": null
+        },
+        {
+         "t": "Alzheimer's dementia, late onset, mod.",
+         "e": "cond"
+        },
+        {
+         "t": ", MMSE 19. Cont. donepezil. Home safety reviewed w/ daughter.",
+         "e": null
+        }
+       ],
+       "hand": true
+      },
+      {
+       "id": "c6",
+       "segs": [
+        {
+         "t": "2. ",
+         "e": null
+        },
+        {
+         "t": "Breast ca L",
+         "e": "cond"
+        },
+        {
+         "t": ": on anastrozole, tolerating. F/u onc.",
+         "e": null
+        }
+       ],
+       "hand": true
+      },
+      {
+       "id": "c7",
+       "segs": [
+        {
+         "t": "3. ",
+         "e": null
+        },
+        {
+         "t": "Depression",
+         "e": "cond"
+        },
+        {
+         "t": ": mood stable on sertraline.",
+         "e": null
+        }
+       ],
+       "hand": true
+      },
+      {
+       "id": "c8",
+       "segs": [
+        {
+         "t": "4. ",
+         "e": null
+        },
+        {
+         "t": "HTN",
+         "e": "cond"
+        },
+        {
+         "t": ": BP 132/78, cont. amlodipine.",
+         "e": null
+        }
+       ],
+       "hand": true
+      }
+     ]
+    }
+   ],
+   "entities": [
+    {
+     "text": "Alzheimer's dementia, late onset, \"mod.\"",
+     "type": "Condition",
+     "flag": "Principal",
+     "preliminary": "G30.1 + F02.B0",
+     "confidence": 0.74
+    },
+    {
+     "text": "Breast cancer, left, on anastrozole",
+     "type": "Condition",
+     "flag": "Coexisting",
+     "preliminary": "C50.912 vs Z85.3",
+     "confidence": 0.79
+    },
+    {
+     "text": "Depression, stable",
+     "type": "Condition",
+     "flag": "Secondary",
+     "preliminary": "F32.A",
+     "confidence": 0.88
+    },
+    {
+     "text": "Hypertension",
+     "type": "Condition",
+     "flag": "Secondary",
+     "preliminary": "I10",
+     "confidence": 0.95
+    },
+    {
+     "text": "MMSE 19/30",
+     "type": "Exam",
+     "flag": "—",
+     "preliminary": "Cognition evidence",
+     "confidence": 0.83
+    },
+    {
+     "text": "Donepezil, anastrozole",
+     "type": "Medication",
+     "flag": "—",
+     "preliminary": "Treatment evidence",
+     "confidence": 0.86
+    }
+   ],
+   "codes": [
+    {
+     "icd10": "G30.1",
+     "description": "Alzheimer's disease with late onset",
+     "hcc": "127",
+     "hcc_label": "Dementia (hierarchy → 126 if moderate confirmed)",
+     "confidence": 0.8,
+     "meat": "MEAT",
+     "source_line": "c5",
+     "rationale": "Etiology documented; treated with donepezil; safety assessed.",
+     "review_reason": "Handwriting OCR 0.76 on this line.",
+     "group": ""
+    },
+    {
+     "icd10": "F02.B0",
+     "description": "Dementia in other diseases, moderate, w/o behavioural disturbance",
+     "hcc": "126",
+     "hcc_label": "Dementia, Moderate",
+     "confidence": 0.78,
+     "meat": "MEA",
+     "source_line": "c5",
+     "rationale": "\"mod.\" read at OCR confidence 0.71; MMSE 19 is consistent but severity must come from the provider's words.",
+     "review_reason": "Severity word uncertain in handwriting. Coder verifies against the image.",
+     "group": ""
+    },
+    {
+     "icd10": "C50.912",
+     "description": "Malignant neoplasm of left female breast, unspecified site",
+     "hcc": "23",
+     "hcc_label": "Prostate, Breast & Other Cancers",
+     "confidence": 0.81,
+     "meat": "MAT",
+     "source_line": "c6",
+     "rationale": "Ongoing adjuvant hormonal therapy = active treatment per ICD-10-CM I.C.2.d, so C50 rather than Z85.3. Gated because history-vs-active is a frequent RADV finding.",
+     "review_reason": "Active vs history-of cancer; coder confirms.",
+     "group": ""
+    },
+    {
+     "icd10": "Z79.811",
+     "description": "Long-term (current) use of aromatase inhibitors",
+     "hcc": null,
+     "hcc_label": "No V28 HCC",
+     "confidence": 0.93,
+     "meat": "T",
+     "source_line": "c4",
+     "rationale": "Supports C50 active-treatment status.",
+     "review_reason": "Below threshold; evidence pre-assembled.",
+     "group": ""
+    },
+    {
+     "icd10": "F32.A",
+     "description": "Depression, unspecified",
+     "hcc": null,
+     "hcc_label": "No V28 HCC",
+     "confidence": 0.9,
+     "meat": "MAT",
+     "source_line": "c7",
+     "rationale": "No severity or episode documented; coded as stated.",
+     "review_reason": "Below threshold; evidence pre-assembled.",
+     "group": ""
+    },
+    {
+     "icd10": "I10",
+     "description": "Essential (primary) hypertension",
+     "hcc": null,
+     "hcc_label": "No V28 HCC",
+     "confidence": 0.97,
+     "meat": "MEAT",
+     "source_line": "c8",
+     "rationale": "BP evaluated, treatment continued.",
+     "review_reason": "Below threshold; evidence pre-assembled.",
+     "group": ""
+    }
+   ],
+   "deletes": [],
+   "gap": null,
+   "interactions": [],
+   "notes": [
+    "Submission for the HCC codes is held until a coder clears the review lane. Nothing low-confidence reaches CMS.",
+    "This note came from an NP home visit, an acceptable provider type. Caregiver or aide visits would be blocked as risk-adjustment sources."
+   ],
+   "time": {
+    "human_min": 28,
+    "codex_min": 1.9,
+    "review_min": 6.5
+   }
+  }
+ }
+}
